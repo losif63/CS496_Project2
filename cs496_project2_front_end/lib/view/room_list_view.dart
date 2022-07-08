@@ -99,6 +99,7 @@ class AllRooms extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 3,
           childAspectRatio: 4 / 3,
           shrinkWrap: true,
