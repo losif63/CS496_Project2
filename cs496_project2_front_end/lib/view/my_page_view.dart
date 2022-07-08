@@ -16,7 +16,7 @@ class MyPageView extends StatelessWidget {
             InkWell(
               onTap: () {},
               child: Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   alignment: Alignment.centerLeft,
                   width: MediaQuery.of(context).size.width,
                   height: 50,
@@ -25,21 +25,12 @@ class MyPageView extends StatelessWidget {
             InkWell(
               onTap: () {},
               child: Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   alignment: Alignment.centerLeft,
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text('로그아웃', style: TextStyle(fontSize: 16))),
             ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  alignment: Alignment.centerLeft,
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: Text('탈퇴하기', style: TextStyle(fontSize: 16))),
-            )
           ],
         ));
   }
