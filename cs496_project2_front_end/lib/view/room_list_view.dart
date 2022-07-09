@@ -1,3 +1,5 @@
+import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class RoomListView extends StatelessWidget {
@@ -83,8 +85,21 @@ class MyRooms extends StatelessWidget {
   }
 }
 
-class AllRooms extends StatelessWidget {
+class AllRooms extends StatefulWidget {
   const AllRooms({Key? key}) : super(key: key);
+
+  @override
+  State<AllRooms> createState() => _AllRoomsState();
+}
+
+class _AllRoomsState extends State<AllRooms> {
+  late Future<List<RoomModel>> _allrooms;
+
+  @override
+  void initState() {
+    super.initState();
+    _allrooms = fetchRooms();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,54 +113,71 @@ class AllRooms extends StatelessWidget {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        GridView.count(
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 3,
-          childAspectRatio: 4 / 3,
-          shrinkWrap: true,
-          children: [
-            Container(
-              color: Colors.amber,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width / 2.5,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  color: Colors.amber,
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(3.0)),
-              child: Stack(
-                children: [
-                  const Text(
-                    '새벽 4시까지 즐겁게 같이 밤샐 사람들을 구합니다.',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                        height: 25,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(0, 0, 0, 0.2),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        alignment: Alignment.center,
-                        child:
-                            const Text('4/10', style: TextStyle(fontSize: 12))),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 100,
-              height: 75,
-              color: Colors.amber,
-            )
-          ],
-        )
+        FutureBuilder<List<RoomModel>>(
+            future: _allrooms,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 3,
+                    childAspectRatio: 4 / 3,
+                    shrinkWrap: true,
+                    children: [
+                      for (var room in snapshot.data!)
+                        Container(color: Colors.amber)
+                      /*Container(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Colors.amber,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(3.0)),
+                      child: Stack(
+                        children: [
+                          const Text(
+                            '새벽 4시까지 즐겁게 같이 밤샐 사람들을 구합니다.',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Container(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                                height: 25,
+                                width: 45,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(0, 0, 0, 0.2),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text('4/10',
+                                    style: TextStyle(fontSize: 12))),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 75,
+                      color: Colors.amber,
+                    )*/
+                    ],
+                  );
+                } else {
+                  return Container(
+                    child: Text('현재 열려있는 방이 없습니다.'),
+                    color: Colors.amber,
+                  );
+                }
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              return const CircularProgressIndicator();
+            })
       ],
     );
   }

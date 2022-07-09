@@ -21,3 +21,36 @@ Future<List<RoomModel>> fetchRooms() async {
     throw Exception('Failed to load Rooms');
   }
 }
+
+Future<RoomModel> addRoom(RoomModel room) async {
+  final response = await http.post(Uri.parse('http://192.249.18.152/addroom'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(<String, dynamic>{
+        'r_id': room.r_id,
+        'room_name': room.room_name,
+        'description': room.description,
+        'opener': room.opener,
+        'open_time': room.open_time,
+        'max_participants': room.max_participants
+      }));
+  if (response.statusCode == 201) {
+    return RoomModel.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to add room');
+  }
+}
+
+Future<http.Response> deleteRoom(int rid) async {
+  final response = await http.delete(
+      Uri.parse('http://192.249.18.152/deleteroom/$rid'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      });
+  if (response.statusCode == 203) {
+    return response;
+  } else {
+    throw Exception('Failed to delete user');
+  }
+}

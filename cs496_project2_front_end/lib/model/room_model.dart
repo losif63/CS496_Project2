@@ -5,7 +5,6 @@ class RoomModel {
   int opener;
   String open_time;
   int max_participants;
-  int cur_participants;
 
   RoomModel(
       {required this.r_id,
@@ -13,8 +12,7 @@ class RoomModel {
       required this.description,
       required this.opener,
       required this.open_time,
-      required this.max_participants,
-      required this.cur_participants});
+      required this.max_participants});
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
@@ -23,8 +21,7 @@ class RoomModel {
         description: json['description'],
         opener: json['opener'],
         open_time: json['open_time'],
-        max_participants: json['max_participants'],
-        cur_participants: json['cur_participants']);
+        max_participants: json['max_participants']);
   }
 }
 
