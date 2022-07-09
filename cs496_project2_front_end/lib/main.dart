@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
 void main() {
-  var NATIVE_APP_KEY = '73209b84ec45301453398f47733a0420';
-  KakaoSdk.init(nativeAppKey: '${NATIVE_APP_KEY}');
+  var NATIVEAPPKEY = '73209b84ec45301453398f47733a0420';
+  KakaoSdk.init(nativeAppKey: NATIVEAPPKEY);
   runApp(const MyApp());
 }
 
