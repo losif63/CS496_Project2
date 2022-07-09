@@ -1,4 +1,6 @@
+import 'package:cs496_project2_front_end/model/participate_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -52,4 +54,21 @@ Future<http.Response> deleteRoom(int rid) async {
   } else {
     throw Exception('Failed to delete user');
   }
+}
+
+List<RoomModel> fetchMyRooms(int uid) {
+  List<int> myParticipates = fetchMyParticipates(uid);
+  List<RoomModel> myRooms = [];
+
+  fetchRooms().then((value) {
+    for (var room in value) {
+      for (var rid in myParticipates) {
+        if (room.r_id == rid) {
+          myRooms.add(room);
+        }
+      }
+    }
+  });
+
+  return myRooms;
 }

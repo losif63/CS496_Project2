@@ -41,6 +41,20 @@ Future<ParticipateModel> addParticipate(ParticipateModel participate) async {
   }
 }
 
+List<int> fetchMyParticipates(int uid) {
+  List<int> myParticipates = [];
+
+  fetchParticipates().then((value) {
+    for (var participate in value) {
+      if (participate.user == uid) {
+        myParticipates.add(participate.p_id);
+      }
+    }
+  });
+
+  return myParticipates;
+}
+
 Future<http.Response> deleteParticipate(int pid) async {
   final response = await http.delete(
       Uri.parse('http://192.249.18.152/participate/deleteparticipate/$pid'),
