@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<UserModel>> fetchUsers() async {
   final response =
-      await http.get(Uri.parse('http://192.249.18.152/fetchusers'));
+      await http.get(Uri.parse('http://192.249.18.152/user/fetchall'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -24,7 +24,7 @@ Future<List<UserModel>> fetchUsers() async {
 
 Future<UserModel> addUser(UserModel user) async {
   final response = await http.post(
-      Uri.parse('http://192.249.18.152/createuser'),
+      Uri.parse('http://192.249.18.152/user/createuser'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       },

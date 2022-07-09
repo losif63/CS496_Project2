@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<RoomModel>> fetchRooms() async {
   final response =
-      await http.get(Uri.parse('http://192.249.18.152/fetchrooms'));
+      await http.get(Uri.parse('http://192.249.18.152/room/fetchall'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -23,7 +23,8 @@ Future<List<RoomModel>> fetchRooms() async {
 }
 
 Future<RoomModel> addRoom(RoomModel room) async {
-  final response = await http.post(Uri.parse('http://192.249.18.152/addroom'),
+  final response = await http.post(
+      Uri.parse('http://192.249.18.152/room/createroom'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       },
@@ -44,7 +45,7 @@ Future<RoomModel> addRoom(RoomModel room) async {
 
 Future<http.Response> deleteRoom(int rid) async {
   final response = await http.delete(
-      Uri.parse('http://192.249.18.152/deleteroom/$rid'),
+      Uri.parse('http://192.249.18.152/room/deleteroom?$rid'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       });
