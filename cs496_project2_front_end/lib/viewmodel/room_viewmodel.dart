@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<RoomModel>> fetchRooms() async {
   final response =
-      await http.get(Uri.parse('http://192.249.18.152/fetchrooms'));
+      await http.get(Uri.parse('http://192.249.18.152/room/fetchall'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
