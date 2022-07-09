@@ -15,24 +15,28 @@ Future<void> main() async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
-  print(email);
-  runApp(MaterialApp(home: email == null ? AuthView() : const ControlView()));
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  //print('user' + email.toString());
+  runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'cs496_project2',
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const ControlView(),
-    );
-  }
+      home: email == null ? AuthView() : const ControlView()));
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'cs496_project2',
+//       theme: ThemeData(
+//         primarySwatch: Colors.amber,
+//       ),
+//       home: const ControlView(),
+//     );
+//   }
+// }

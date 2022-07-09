@@ -1,7 +1,9 @@
+import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/view/auth_join_view.dart';
 import 'package:cs496_project2_front_end/view/control_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
+import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -113,15 +115,24 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             ),
             onPressed: () async {
               if (widget._formKey.currentState!.validate()) {
-                //server의 유저정보와 같은 것이 있는지 체크
-                widget._formKey.currentState!.save();
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString('email', email);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext ctx) => const ControlView()));
-                const SnackBar(content: Text('저장완료'));
+                Future<UserModel?> currentUser = fetchUserByEmail(email);
+                currentUser.then((value) async {
+                  if (value == null) {
+                    return const SnackBar(content: Text('저장된 유저 정보가 없습니다.'));
+                  } else {
+                    widget._formKey.currentState!.save();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('email', email);
+                    prefs.setString('u_id', value.u_id.toString());
+                    print('prefs print: ' + prefs.toString());
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext ctx) =>
+                                const ControlView()));
+                  }
+                });
               }
             },
           ),

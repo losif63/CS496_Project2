@@ -40,3 +40,17 @@ Future<ParticipateModel> addParticipate(ParticipateModel participate) async {
     throw Exception('Failed to add room');
   }
 }
+
+List<int> fetchMyParticipates(int uid) {
+  List<int> myParticipates = [];
+
+  fetchParticipates().then((value) {
+    for (var participate in value) {
+      if (participate.user == uid) {
+        myParticipates.add(participate.p_id);
+      }
+    }
+  });
+
+  return myParticipates;
+}

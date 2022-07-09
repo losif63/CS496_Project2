@@ -43,3 +43,12 @@ Future<UserModel> addUser(UserModel user) async {
     throw Exception('Failed to add user');
   }
 }
+
+Future<UserModel?> fetchUserByEmail(String userEmail) async {
+  List<UserModel> users = await fetchUsers();
+
+  for (var user in users) {
+    if (user.email == userEmail) return user;
+  }
+  return null;
+}
