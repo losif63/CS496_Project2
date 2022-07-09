@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 
 Future<List<UserModel>> fetchUsers() async {
   final response =
@@ -41,5 +42,27 @@ Future<UserModel> addUser(UserModel user) async {
     return UserModel.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to add user');
+  }
+}
+
+Future<UserModel> updateUser(UserModel user) async {
+  final response = await http.put(
+      Uri.parse('http://192.249.18.152/user/updateuser'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(<String, dynamic>{
+        'u_id': user.u_id,
+        'name': user.name,
+        'profile_word': user.profile_word,
+        'profile_pic': user.profile_pic,
+        'email': user.email,
+        'password': user.password,
+        'birthdate': user.birthdate
+      }));
+  if (response.statusCode == 200) {
+    return UserModel.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to update user');
   }
 }

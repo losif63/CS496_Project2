@@ -40,3 +40,14 @@ Future<ParticipateModel> addParticipate(ParticipateModel participate) async {
     throw Exception('Failed to add room');
   }
 }
+
+Future<http.Response> deleteParticipate(int pid) async {
+  final response = await http.delete(
+      Uri.parse('http://192.249.18.152/participate/deleteparticipate/$pid'),
+      headers: <String, String>{'Content-Type': 'text/plain'});
+  if (response.statusCode == 203) {
+    return response;
+  } else {
+    throw Exception('Failed to delete user');
+  }
+}
