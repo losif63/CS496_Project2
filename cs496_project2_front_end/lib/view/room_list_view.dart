@@ -109,75 +109,71 @@ class _AllRoomsState extends State<AllRooms> {
       children: [
         const SizedBox(height: 10),
         const Text(
-          '현재 열려있는 방 목록',
+          '모든 방 목록',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         FutureBuilder<List<RoomModel>>(
-            future: _allrooms,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  return GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    childAspectRatio: 4 / 3,
-                    shrinkWrap: true,
-                    children: [
-                      for (var room in snapshot.data!)
-                        Container(color: Colors.amber)
-                      /*Container(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Colors.amber,
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(3.0)),
-                      child: Stack(
-                        children: [
-                          const Text(
-                            '새벽 4시까지 즐겁게 같이 밤샐 사람들을 구합니다.',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                                height: 25,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(0, 0, 0, 0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text('4/10',
-                                    style: TextStyle(fontSize: 12))),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 100,
-                      height: 75,
-                      color: Colors.amber,
-                    )*/
-                    ],
-                  );
-                } else {
-                  return Container(
-                    child: Text('현재 열려있는 방이 없습니다.'),
-                    color: Colors.amber,
-                  );
-                }
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+          future: _allrooms,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  childAspectRatio: 4 / 3,
+                  shrinkWrap: true,
+                  children: [
+                    for (var room in snapshot.data!)
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            color: Colors.amber,
+                            border: Border.all(color: Colors.black45),
+                            borderRadius: BorderRadius.circular(3.0)),
+                        child: Stack(
+                          children: [
+                            Text(
+                              room.room_name,
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Container(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                  height: 25,
+                                  width: 45,
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(0, 0, 0, 0.2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text('4/${room.max_participants}',
+                                      style: TextStyle(fontSize: 12))),
+                            ),
+                          ],
+                        ),
+                      )
+                  ],
+                );
+              } else {
+                return const Text(
+                  '  현재 열려있는 방이 없습니다.',
+                  style: TextStyle(color: Colors.black45),
+                );
               }
-
-              return const CircularProgressIndicator();
-            })
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return Container(
+                height: 80,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(color: Colors.amber));
+          },
+        )
       ],
     );
   }

@@ -1,4 +1,4 @@
-import 'package:cs496_project2_front_end/view/auth_view.dart';
+import 'package:cs496_project2_front_end/view/chat_list_view.dart';
 import 'package:cs496_project2_front_end/view/my_page_view.dart';
 import 'package:cs496_project2_front_end/view/room_list_view.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +19,10 @@ class _ControlViewState extends State<ControlView> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: [
-          const RoomListView(),
-          AuthView(),
-          const MyPageView(),
+        children: const [
+          RoomListView(),
+          ChatListView(),
+          MyPageView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -40,7 +40,7 @@ class _ControlViewState extends State<ControlView> {
         items: const [
           BottomNavigationBarItem(
               label: 'HOME', icon: Icon(MdiIcons.homeVariantOutline)),
-          BottomNavigationBarItem(label: 'LOGIN', icon: Icon(MdiIcons.fire)),
+          BottomNavigationBarItem(label: 'CHAT', icon: Icon(MdiIcons.forum)),
           BottomNavigationBarItem(label: 'MY', icon: Icon(MdiIcons.account)),
         ],
       ),

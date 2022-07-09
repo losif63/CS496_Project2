@@ -1,7 +1,9 @@
 import 'package:cs496_project2_front_end/view/auth_join_view.dart';
+import 'package:cs496_project2_front_end/view/control_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthView extends StatelessWidget {
   AuthView({Key? key}) : super(key: key);
@@ -113,6 +115,12 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
               if (widget._formKey.currentState!.validate()) {
                 //server의 유저정보와 같은 것이 있는지 체크
                 widget._formKey.currentState!.save();
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setString('email', email);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) => const ControlView()));
                 const SnackBar(content: Text('저장완료'));
               }
             },
