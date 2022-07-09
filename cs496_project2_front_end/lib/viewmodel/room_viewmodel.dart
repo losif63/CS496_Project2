@@ -47,10 +47,8 @@ Future<RoomModel> addRoom(RoomModel room) async {
 
 Future<http.Response> deleteRoom(int rid) async {
   final response = await http.delete(
-      Uri.parse('http://192.249.18.152/room/deleteroom?$rid'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8'
-      });
+      Uri.parse('http://192.249.18.152/room/deleteroom/$rid'),
+      headers: <String, String>{'Content-Type': 'text/plain'});
   if (response.statusCode == 203) {
     return response;
   } else {
