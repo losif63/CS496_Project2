@@ -19,10 +19,10 @@ class _ControlViewState extends State<ControlView> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
-          RoomListView(),
-          //AuthView(),
-          MyPageView(),
+        children: [
+          const RoomListView(),
+          AuthView(),
+          const MyPageView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -40,9 +40,8 @@ class _ControlViewState extends State<ControlView> {
         items: const [
           BottomNavigationBarItem(
               label: 'HOME', icon: Icon(MdiIcons.homeVariantOutline)),
-          //BottomNavigationBarItem(label: 'LOGIN', icon: Icon(MdiIcons.fire)),
-          BottomNavigationBarItem(
-              label: 'MY', icon: Icon(MdiIcons.naturePeople)),
+          BottomNavigationBarItem(label: 'LOGIN', icon: Icon(MdiIcons.fire)),
+          BottomNavigationBarItem(label: 'MY', icon: Icon(MdiIcons.account)),
         ],
       ),
     );
