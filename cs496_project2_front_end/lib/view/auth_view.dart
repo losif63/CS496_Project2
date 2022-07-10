@@ -132,7 +132,6 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                         await SharedPreferences.getInstance();
                     prefs.setString('email', email);
                     prefs.setString('u_id', value.u_id.toString());
-                    print('prefs print: ' + prefs.toString());
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -198,7 +197,6 @@ class KakaoLoginButton extends StatelessWidget {
           maximumSize: const Size.fromHeight(50)),
       onPressed: () {
         viewModel.login().then((value) {
-          print('value ' + value.toString());
           if (value == true) {
             Navigator.pushReplacement(
                 context,
@@ -206,7 +204,6 @@ class KakaoLoginButton extends StatelessWidget {
                     builder: (BuildContext ctx) => ControlView()));
           } else {
             print('로그인에 실패했습니다.');
-            //로그인에 실패했습니다.
           }
         });
       },
@@ -214,8 +211,8 @@ class KakaoLoginButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset('assets/images/kakaotalk.png', height: 30, width: 30),
-          SizedBox(width: 10),
-          Text('카카오톡으로 로그인하기')
+          const SizedBox(width: 10),
+          const Text('카카오톡으로 로그인하기')
         ],
       ),
     );

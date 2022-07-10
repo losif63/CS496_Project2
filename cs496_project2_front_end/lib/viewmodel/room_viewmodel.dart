@@ -1,4 +1,3 @@
-import 'package:cs496_project2_front_end/model/participate_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'dart:convert';

@@ -6,7 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ControlView extends StatefulWidget {
-  ControlView({Key? key}) : super(key: key);
+  const ControlView({Key? key}) : super(key: key);
 
   @override
   State<ControlView> createState() => _ControlViewState();
@@ -23,8 +23,6 @@ class _ControlViewState extends State<ControlView> {
     _hideNavBar = false;
   }
 
-  int _currentIndex = 0;
-
   List<Widget> _buildScreens() {
     return [
       const RoomListView(),
@@ -36,19 +34,19 @@ class _ControlViewState extends State<ControlView> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(MdiIcons.homeVariantOutline),
+        icon: const Icon(MdiIcons.homeVariantOutline),
         title: ("HOME"),
         activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.black38,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(MdiIcons.forum),
+        icon: const Icon(MdiIcons.forum),
         title: ("CHAT"),
         activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.black38,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(MdiIcons.account),
+        icon: const Icon(MdiIcons.account),
         title: ("MY"),
         activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.black38,

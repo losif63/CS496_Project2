@@ -14,17 +14,17 @@ class RoomListView extends StatelessWidget {
     return Builder(builder: ((context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('모임하자'),
+          title: const Text('모임하자'),
           elevation: 0.0,
         ),
         body: ListView(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           children: const [MyRooms(), AllRooms()],
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () =>
-              pushNewScreen(context, screen: RoomMakeView(), withNavBar: false),
+          onPressed: () => pushNewScreen(context,
+              screen: const RoomMakeView(), withNavBar: false),
           // onPressed: () => Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: ((context) => RoomMakeView())),
@@ -155,7 +155,7 @@ class _CurParticipantsState extends State<CurParticipants> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('${returnVal}/${widget.maxPar}',
+    return Text('$returnVal/${widget.maxPar}',
         style: const TextStyle(fontSize: 12));
   }
 }

@@ -59,15 +59,12 @@ Future<List<int>> fetchParticipants(int rid) async {
   List<int> participantsUid = [];
 
   await fetchParticipates().then((value) {
-    print(value.length);
     for (var participate in value) {
       if (participate.room == rid) {
         participantsUid.add(participate.user);
-        print('add!');
       }
     }
   });
-  print('return!');
   return participantsUid;
 }
 
