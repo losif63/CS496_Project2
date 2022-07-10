@@ -49,7 +49,8 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (val) {
               bool _isValidName(String val) {
-                return RegExp(r"^[a-z0-9가-힣()]+[a-z0-9가-힣()\s]$").hasMatch(val);
+                return RegExp(r"^[A-Za-z0-9가-힣()]+[A-Za-z0-9가-힣()\s]$")
+                    .hasMatch(val);
               }
 
               return _isValidName(val ?? '') ? null : '이름을 두 글자 이상으로 입력해주세요';

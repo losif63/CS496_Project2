@@ -25,18 +25,18 @@ Future<void> main() async {
       home: email == null ? AuthView() : const ControlView()));
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'cs496_project2',
-//       theme: ThemeData(
-//         primarySwatch: Colors.amber,
-//       ),
-//       home: const ControlView(),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'cs496_project2',
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+      ),
+      home: const ControlView(),
+    );
+  }
+}
