@@ -82,6 +82,11 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             onFieldSubmitted: (val) {
               setState(() => email = val.trim());
             },
+
+            onSaved: (val) {
+              setState(() => email = val!);
+            },
+
             decoration: const InputDecoration(
                 labelText: '이메일', hintText: '이메일을 입력해주세요'),
           ),
@@ -97,15 +102,20 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                       .hasMatch(val);
                 }
 
-                return _isValidPassword(val ?? '')
-                    ? null
-                    : '8자리 이상의 영어와 숫자 조합의 비밀번호를 입력해주세요.';
-              },
-              onFieldSubmitted: (val) {
-                setState(() => password = val.trim());
-              },
+              return _isValidPassword(val ?? '')
+                  ? null
+                  : '8자리 이상의 영어와 숫자 조합의 비밀번호를 입력해주세요.';
+            },
+            onFieldSubmitted: (val) {
+              setState(() => password = val);
+            },
+            onSaved: (val) {
+              setState(() => password = val!);
+            },
+          ),
               decoration: const InputDecoration(
                   labelText: '비밀번호', hintText: '비밀번호를 입력해주세요')),
+
           const SizedBox(height: 15),
           ElevatedButton(
             child: Row(
@@ -193,8 +203,20 @@ class KakaoLoginButton extends StatelessWidget {
           primary: Colors.amber,
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           maximumSize: const Size.fromHeight(50)),
-      onPressed: () async {
-        await viewModel.login();
+
+      onPressed: () {
+        viewModel.login().then((value) {
+          print('value ' + value.toString());
+          if (value == true) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext ctx) => const ControlView()));
+          } else {
+            print('로그인에 실패했습니다.');
+            //로그인에 실패했습니다.
+          }
+        });
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
