@@ -134,10 +134,7 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
                         email: email,
                         password: password,
                         birthdate: ''));
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext ctx) => AuthView()));
+                    Navigator.pop(context);
                   } else {
                     log('해당 이메일은 이미 등록되었습니다...');
                     return const SnackBar(
