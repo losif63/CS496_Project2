@@ -122,7 +122,7 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                   if (value == null) {
                     log('저장된 유저 정보가 없습니다.');
                     return const SnackBar(content: Text('저장된 유저 정보가 없습니다.'));
-                  } else {
+                  } else if (value.password == password) {
                     widget._formKey.currentState!.save();
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
@@ -134,6 +134,8 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                         MaterialPageRoute(
                             builder: (BuildContext ctx) =>
                                 const ControlView()));
+                  } else {
+                    log('비밀번호가 잘못되었습니다.');
                   }
                 });
               }
