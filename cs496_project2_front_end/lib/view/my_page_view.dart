@@ -30,7 +30,12 @@ class MyPageView extends StatelessWidget {
                     children: [
                       MyInfo(snapshot.data!),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => UserUpdateView())));
+                        },
                         child: Container(
                             padding: const EdgeInsets.only(left: 15, right: 15),
                             alignment: Alignment.centerLeft,
