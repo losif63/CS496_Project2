@@ -1,7 +1,6 @@
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
-import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +14,6 @@ class AuthViewModel {
   Future<bool> login() async {
     String state = '';
     isLogined = await _kakaoLogin.login();
-    print(isLogined.toString());
     if (isLogined) {
       user = await UserApi.instance.me();
       String email = user?.kakaoAccount?.email ?? '';
@@ -24,7 +22,6 @@ class AuthViewModel {
         print('what to do when this error occurs...?');
         state = 'emailerror';
       } else {
-        print('here ' + email);
         await fetchUserByEmail(email).then((value) async {
           if (value == null) {
             //user가 kakao로 우리 앱에 가입한 적이 없는 경우
@@ -53,7 +50,6 @@ class AuthViewModel {
           }
         });
       }
-      print('state: ' + state);
     }
     if (state == 'useradd' || state == 'userlogin') {
       return true;

@@ -1,12 +1,9 @@
 import 'package:cs496_project2_front_end/model/participate_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/view/control_view.dart';
-import 'package:cs496_project2_front_end/view/room_list_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomMakeView extends StatefulWidget {
@@ -28,7 +25,7 @@ class _RoomMakeViewState extends State<RoomMakeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('방 추가하기'),
+        title: const Text('방 추가하기'),
         elevation: 0.0,
       ),
       body: Container(
@@ -165,7 +162,7 @@ class _RoomMakeViewState extends State<RoomMakeView> {
                                       context,
                                       MaterialPageRoute(
                                           builder: ((context) =>
-                                              ControlView())));
+                                              const ControlView())));
                                 });
                               }
                               //Todo

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<UserModel>> fetchUsers() async {

@@ -1,5 +1,3 @@
-import 'package:cs496_project2_front_end/view/user_update_view.dart';
-import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/view/auth_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
@@ -16,7 +14,7 @@ class MyPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('마이페이지'),
+          title: const Text('마이페이지'),
           elevation: 0.0,
         ),
         body: FutureBuilder(
@@ -61,8 +59,8 @@ class MyPageView extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             width: MediaQuery.of(context).size.width,
                             height: 50,
-                            child:
-                                Text('로그아웃', style: TextStyle(fontSize: 16))),
+                            child: const Text('로그아웃',
+                                style: TextStyle(fontSize: 16))),
                       ),
                     ],
                   );
@@ -82,7 +80,7 @@ class MyInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.brown.withOpacity(0.3),
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       width: MediaQuery.of(context).size.width,
       height: 150,
       child: Column(
@@ -92,12 +90,13 @@ class MyInfo extends StatelessWidget {
             children: [
               Image.asset('assets/images/kakaotalk.png',
                   scale: 0.1, width: 50, height: 50),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(user.name,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold))
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             user.profile_word,
           ),

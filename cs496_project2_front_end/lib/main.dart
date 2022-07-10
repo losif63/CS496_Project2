@@ -1,9 +1,5 @@
 import 'package:cs496_project2_front_end/view/auth_view.dart';
 import 'package:cs496_project2_front_end/view/control_view.dart';
-import 'package:cs496_project2_front_end/view/my_page_view.dart';
-import 'package:cs496_project2_front_end/view/room_chat_view.dart';
-import 'package:cs496_project2_front_end/view/room_list_view.dart';
-import 'package:cs496_project2_front_end/view/room_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 import 'package:shared_preferences/shared_preferences.dart';

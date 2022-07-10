@@ -195,12 +195,12 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
                           ],
                         ),
                         onPressed: () {
-                          log('ProfileUri: ${profileUri}');
-                          log('Name: ${name}');
-                          log('Email: ${email}');
-                          log('Password: ${password}');
-                          log('ProfileMessage: ${profileMessage}');
-                          log('Birthday: ${birthday}');
+                          log('ProfileUri: $profileUri');
+                          log('Name: $name');
+                          log('Email: $email');
+                          log('Password: $password');
+                          log('ProfileMessage: $profileMessage');
+                          log('Birthday: $birthday');
                           // if (widget._formKey.currentState!.validate()) {
                           //   //server의 유저정보와 같은 것이 있는지 체크
                           //   Future<UserModel?> currentUser =
