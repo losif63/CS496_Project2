@@ -1,3 +1,5 @@
+import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/view/auth_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
@@ -16,48 +18,64 @@ class MyPageView extends StatelessWidget {
           title: Text('마이페이지'),
           elevation: 0.0,
         ),
-        body: Column(
-          children: [
-            MyInfo(),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  alignment: Alignment.centerLeft,
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: Text('회원 정보 수정', style: TextStyle(fontSize: 16))),
-            ),
-            InkWell(
-              onTap: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                String uid = prefs.getString('u_id') ?? '0';
-                fetchUserByUid(int.parse(uid)).then((value) {
-                  if (value!.password == 'kakao') {
-                    viewModel.logout();
-                  }
-                });
-                await prefs.clear();
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => AuthView()),
-                    (route) => false);
-                //navigation getoffall 하고 authview로
-              },
-              child: Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  alignment: Alignment.centerLeft,
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: Text('로그아웃', style: TextStyle(fontSize: 16))),
-            ),
-          ],
-        ));
+        body: FutureBuilder(
+            future: fetchUserByUidWithoutGiven(),
+            builder: (context, AsyncSnapshot<UserModel?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return Column(
+                    children: [
+                      MyInfo(snapshot.data!),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            alignment: Alignment.centerLeft,
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: const Text('회원 정보 수정',
+                                style: TextStyle(fontSize: 16))),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          fetchUserByUidWithoutGiven().then((value) {
+                            if (value!.password == 'kakao') {
+                              viewModel.logout();
+                            }
+                          });
+                          await prefs.clear();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AuthView()),
+                              (route) => false);
+                          //navigation getoffall 하고 authview로
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            alignment: Alignment.centerLeft,
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child:
+                                Text('로그아웃', style: TextStyle(fontSize: 16))),
+                      ),
+                    ],
+                  );
+                }
+              } else {
+                return const CircularProgressIndicator();
+              }
+            }));
   }
 }
 
 class MyInfo extends StatelessWidget {
-  const MyInfo({Key? key}) : super(key: key);
+  MyInfo(this.user, {Key? key}) : super(key: key);
+  UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +92,13 @@ class MyInfo extends StatelessWidget {
               Image.asset('assets/images/kakaotalk.png',
                   scale: 0.1, width: 50, height: 50),
               SizedBox(width: 10),
-              Text('유저1',
+              Text(user.name,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
             ],
           ),
           SizedBox(height: 10),
           Text(
-            '소개글',
+            user.profile_word,
           ),
         ],
       ),
