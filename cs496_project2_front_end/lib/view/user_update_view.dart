@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,7 +71,7 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
                 return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      imageProfile(snapshot.data!.profile_pic),
+                      imageProfile(profileUri),
                       const SizedBox(height: 5),
                       TextFormField(
                         onSaved: null,
@@ -314,9 +316,26 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
 
   takePhoto(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
+    final prefs = await SharedPreferences.getInstance();
+    int uid = int.parse(prefs.getString('u_id') ?? '-1');
     setState(() {
       if (pickedFile != null) {
         _imageFile = pickedFile;
+        log(_imageFile.path);
+        foo() async {
+          http.MultipartRequest request = http.MultipartRequest(
+              'POST', Uri.parse('http://192.249.18.152/profilepic/${uid}'));
+
+          request.files.add(await http.MultipartFile.fromPath(
+              _imageFile.name, _imageFile.path));
+          http.StreamedResponse response = await request.send();
+          if (response.statusCode == 200) {
+            profileUri = await response.stream.bytesToString();
+            log(profileUri);
+          }
+        }
+
+        foo();
       }
     });
   }
