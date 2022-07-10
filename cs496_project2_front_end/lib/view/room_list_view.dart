@@ -59,7 +59,11 @@ class MyRooms extends StatelessWidget {
                     itemBuilder: ((context, index) {
                       int maxPar = snapshot.data![index].max_participants;
                       return InkWell(
-                        onTap: () {},
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    RoomDetailView(snapshot.data![index])))),
                         child: Container(
                           width: MediaQuery.of(context).size.width / 2.5,
                           padding: const EdgeInsets.all(5),
@@ -192,7 +196,10 @@ class _AllRoomsState extends State<AllRooms> {
                   children: [
                     for (var room in snapshot.data!)
                       InkWell(
-                        onTap: () {},
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => RoomDetailView(room)))),
                         child: Container(
                           margin: const EdgeInsets.all(5),
                           padding: const EdgeInsets.all(5),
