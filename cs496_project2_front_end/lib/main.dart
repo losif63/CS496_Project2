@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: email == null ? AuthView() : const ControlView(),
+      home: email == null ? AuthView() : ControlView(),
     );
   }
 }

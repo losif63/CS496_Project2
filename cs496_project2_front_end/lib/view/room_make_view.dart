@@ -165,7 +165,7 @@ class _RoomMakeViewState extends State<RoomMakeView> {
                                       context,
                                       MaterialPageRoute(
                                           builder: ((context) =>
-                                              const ControlView())));
+                                              ControlView())));
                                 });
                               }
                               //Todo
