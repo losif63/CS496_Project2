@@ -19,9 +19,9 @@ class _ControlViewState extends State<ControlView> {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
-          RoomListView(),
-          ChatListView(),
+        children: [
+          const RoomListView(),
+          const ChatListView(),
           MyPageView(),
         ],
       ),

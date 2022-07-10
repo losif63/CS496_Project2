@@ -15,7 +15,7 @@ Future<List<RoomModel>> fetchRooms() async {
     List<dynamic> roomList = jsonDecode(response.body);
     List<RoomModel> rooms = [];
     for (final room in roomList) {
-      rooms.add(RoomModel.fromJson(room));
+      rooms.insert(0, RoomModel.fromJson(room));
     }
     return rooms;
   } else {
@@ -60,10 +60,10 @@ Future<http.Response> deleteRoom(int rid) async {
 Future<List<RoomModel>> fetchMyRooms() async {
   final prefs = await SharedPreferences.getInstance();
   String uid = prefs.getString('u_id') ?? '0';
-  List<int> myParticipates = fetchMyParticipates(int.parse(uid));
+  List<int> myParticipates = await fetchMyParticipates(int.parse(uid));
   List<RoomModel> myRooms = [];
 
-  fetchRooms().then((value) {
+  await fetchRooms().then((value) {
     for (var room in value) {
       for (var rid in myParticipates) {
         if (room.r_id == rid) {

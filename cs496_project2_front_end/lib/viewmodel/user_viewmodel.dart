@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<UserModel>> fetchUsers() async {
   final response =
@@ -59,6 +60,17 @@ Future<UserModel?> fetchUserByUid(int uid) async {
 
   for (var user in users) {
     if (user.u_id == uid) return user;
+  }
+  return null;
+}
+
+Future<UserModel?> fetchUserByUidWithoutGiven() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String uid = prefs.getString('u_id') ?? '0';
+  List<UserModel> users = await fetchUsers();
+
+  for (var user in users) {
+    if (user.u_id == int.parse(uid)) return user;
   }
   return null;
 }
