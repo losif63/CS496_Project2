@@ -60,6 +60,7 @@ Future<http.Response> deleteRoom(int rid) async {
 Future<List<RoomModel>> fetchMyRooms() async {
   final prefs = await SharedPreferences.getInstance();
   String uid = prefs.getString('u_id') ?? '0';
+  print('userid: ' + uid);
   List<int> myParticipates = fetchMyParticipates(int.parse(uid));
   List<RoomModel> myRooms = [];
 

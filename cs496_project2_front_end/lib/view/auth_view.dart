@@ -107,7 +107,9 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             onFieldSubmitted: (val) {
               setState(() => email = val);
             },
-            onSaved: (val) {},
+            onSaved: (val) {
+              setState(() => email = val!);
+            },
           ),
           const SizedBox(height: 10),
           TextFormField(
@@ -129,7 +131,9 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             onFieldSubmitted: (val) {
               setState(() => password = val);
             },
-            onSaved: (val) {},
+            onSaved: (val) {
+              setState(() => password = val!);
+            },
           ),
           const SizedBox(height: 15),
           ElevatedButton(
@@ -181,12 +185,14 @@ class KakaoLoginButton extends StatelessWidget {
           maximumSize: const Size.fromHeight(50)),
       onPressed: () {
         viewModel.login().then((value) {
-          if (value) {
+          print('value ' + value.toString());
+          if (value == true) {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext ctx) => const ControlView()));
           } else {
+            print('로그인에 실패했습니다.');
             //로그인에 실패했습니다.
           }
         });
