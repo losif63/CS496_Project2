@@ -66,7 +66,6 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
         key: widget._formKey,
         child: Column(children: [
           TextFormField(
-            onSaved: null,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -82,18 +81,15 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             onFieldSubmitted: (val) {
               setState(() => email = val.trim());
             },
-
             onSaved: (val) {
               setState(() => email = val!);
             },
-
             decoration: const InputDecoration(
                 labelText: '이메일', hintText: '이메일을 입력해주세요'),
           ),
           const SizedBox(height: 10),
           TextFormField(
               obscureText: true,
-              onSaved: null,
               autocorrect: false,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (val) {
@@ -102,20 +98,18 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                       .hasMatch(val);
                 }
 
-              return _isValidPassword(val ?? '')
-                  ? null
-                  : '8자리 이상의 영어와 숫자 조합의 비밀번호를 입력해주세요.';
-            },
-            onFieldSubmitted: (val) {
-              setState(() => password = val);
-            },
-            onSaved: (val) {
-              setState(() => password = val!);
-            },
-          ),
+                return _isValidPassword(val ?? '')
+                    ? null
+                    : '8자리 이상의 영어와 숫자 조합의 비밀번호를 입력해주세요.';
+              },
+              onFieldSubmitted: (val) {
+                setState(() => password = val);
+              },
+              onSaved: (val) {
+                setState(() => password = val!);
+              },
               decoration: const InputDecoration(
                   labelText: '비밀번호', hintText: '비밀번호를 입력해주세요')),
-
           const SizedBox(height: 15),
           ElevatedButton(
             child: Row(
@@ -203,7 +197,6 @@ class KakaoLoginButton extends StatelessWidget {
           primary: Colors.amber,
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           maximumSize: const Size.fromHeight(50)),
-
       onPressed: () {
         viewModel.login().then((value) {
           print('value ' + value.toString());
