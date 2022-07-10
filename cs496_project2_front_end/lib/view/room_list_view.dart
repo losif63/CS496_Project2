@@ -4,6 +4,7 @@ import 'package:cs496_project2_front_end/view/room_make_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class RoomListView extends StatelessWidget {
   const RoomListView({Key? key}) : super(key: key);
@@ -22,8 +23,12 @@ class RoomListView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => RoomMakeView()))),
+          onPressed: () =>
+              pushNewScreen(context, screen: RoomMakeView(), withNavBar: false),
+          // onPressed: () => Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: ((context) => RoomMakeView())),
+          // ),
         ),
       );
     }));

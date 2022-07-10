@@ -136,8 +136,7 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext ctx) =>
-                                const ControlView()));
+                            builder: (BuildContext ctx) => ControlView()));
                   } else {
                     log('비밀번호가 잘못되었습니다.');
                   }
@@ -204,7 +203,7 @@ class KakaoLoginButton extends StatelessWidget {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext ctx) => const ControlView()));
+                    builder: (BuildContext ctx) => ControlView()));
           } else {
             print('로그인에 실패했습니다.');
             //로그인에 실패했습니다.

@@ -14,7 +14,7 @@ class _ChatListViewState extends State<ChatListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('방 목록')),
+      appBar: AppBar(title: Text('방 목록'), elevation: 0.0),
       body: FutureBuilder(
           future: fetchMyRooms(),
           builder: (context, AsyncSnapshot<List<RoomModel>> snapshot) {
