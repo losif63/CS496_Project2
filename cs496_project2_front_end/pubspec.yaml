@@ -38,6 +38,7 @@ dependencies:
   material_design_icons_flutter: ^5.0.6595
   kakao_flutter_sdk: ^1.2.1
   shared_preferences: ^2.0.15
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

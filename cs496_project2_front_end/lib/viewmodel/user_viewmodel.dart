@@ -54,6 +54,15 @@ Future<UserModel?> fetchUserByEmail(String userEmail) async {
   return null;
 }
 
+Future<UserModel?> fetchUserByUid(int uid) async {
+  List<UserModel> users = await fetchUsers();
+
+  for (var user in users) {
+    if (user.u_id == uid) return user;
+  }
+  return null;
+}
+
 Future<UserModel> updateUser(UserModel user) async {
   final response = await http.put(
       Uri.parse('http://192.249.18.152/user/updateuser'),
