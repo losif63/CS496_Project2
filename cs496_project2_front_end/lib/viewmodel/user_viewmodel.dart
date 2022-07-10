@@ -45,7 +45,6 @@ Future<UserModel> addUser(UserModel user) async {
   }
 }
 
-
 Future<UserModel?> fetchUserByEmail(String userEmail) async {
   List<UserModel> users = await fetchUsers();
 

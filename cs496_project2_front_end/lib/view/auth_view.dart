@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/view/auth_join_view.dart';
 import 'package:cs496_project2_front_end/view/control_view.dart';
@@ -25,7 +27,9 @@ class AuthView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      height: 50, width: 50, color: Colors.amber), //앱 로고 박기
+                      height: 50,
+                      width: 50,
+                      color: Colors.amber), //TODO: 앱 로고 박기
                   const SizedBox(height: 15),
                   const Text('사람들과 간편하게 모임을 만들자, 모여라',
                       style: TextStyle(fontSize: 16, color: Colors.black87)),
@@ -33,34 +37,6 @@ class AuthView extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(45, 30, 45, 30),
                     child: CustomLoginForm(formKey: _formKey),
                   ),
-                  const Text("다른 방법으로 로그인하기",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black54)),
-                  const SizedBox(height: 10),
-                  KakaoLoginButton(), //TODO: 기능 구현!
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("계정이 없으신가요?",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.black87)),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => AuthJoinView())));
-                          },
-                          child: const Text("이메일로 회원가입",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.orange)))
-                    ],
-                  )
                 ])),
       ),
     );
@@ -90,8 +66,7 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
         key: widget._formKey,
         child: Column(children: [
           TextFormField(
-            decoration: const InputDecoration(
-                labelText: '이메일', hintText: '이메일을 입력해주세요'),
+            onSaved: null,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -105,24 +80,27 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
               return _isValidEmail(val ?? '') ? null : '올바른 이메일 형식으로 입력해주세요';
             },
             onFieldSubmitted: (val) {
-              setState(() => email = val);
+              setState(() => email = val.trim());
             },
+
             onSaved: (val) {
               setState(() => email = val!);
             },
+
+            decoration: const InputDecoration(
+                labelText: '이메일', hintText: '이메일을 입력해주세요'),
           ),
           const SizedBox(height: 10),
           TextFormField(
-            decoration: const InputDecoration(
-                labelText: '비밀번호', hintText: '비밀번호를 입력해주세요'),
-            obscureText: true,
-            autocorrect: false,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (val) {
-              bool _isValidPassword(String val) {
-                return RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}")
-                    .hasMatch(val);
-              }
+              obscureText: true,
+              onSaved: null,
+              autocorrect: false,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (val) {
+                bool _isValidPassword(String val) {
+                  return RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}")
+                      .hasMatch(val);
+                }
 
               return _isValidPassword(val ?? '')
                   ? null
@@ -135,6 +113,9 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
               setState(() => password = val!);
             },
           ),
+              decoration: const InputDecoration(
+                  labelText: '비밀번호', hintText: '비밀번호를 입력해주세요')),
+
           const SizedBox(height: 15),
           ElevatedButton(
             child: Row(
@@ -144,12 +125,14 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                 Text('로그인', style: TextStyle(fontSize: 16)),
               ],
             ),
-            onPressed: () {
+            onPressed: () async {
               if (widget._formKey.currentState!.validate()) {
-                fetchUserByEmail(email).then((value) async {
+                Future<UserModel?> currentUser = fetchUserByEmail(email);
+                currentUser.then((value) async {
                   if (value == null) {
-                    //저장된 유저 정보가 없습니다. 회원가입을 먼저 해주십시오.
-                  } else {
+                    log('저장된 유저 정보가 없습니다.');
+                    return const SnackBar(content: Text('저장된 유저 정보가 없습니다.'));
+                  } else if (value.password == password) {
                     widget._formKey.currentState!.save();
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
@@ -161,11 +144,48 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                         MaterialPageRoute(
                             builder: (BuildContext ctx) =>
                                 const ControlView()));
+                  } else {
+                    log('비밀번호가 잘못되었습니다.');
                   }
                 });
               }
             },
           ),
+          const SizedBox(height: 45),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("다른 방법으로 로그인하기",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.grey,
+                  )),
+              const SizedBox(height: 10),
+              KakaoLoginButton(),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("계정이 없으신가요?",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black87)),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => AuthJoinView())));
+                      },
+                      child: const Text("이메일로 회원가입",
+                          style: TextStyle(fontSize: 12, color: Colors.orange)))
+                ],
+              )
+            ],
+          )
         ]));
   }
 }
@@ -183,6 +203,7 @@ class KakaoLoginButton extends StatelessWidget {
           primary: Colors.amber,
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           maximumSize: const Size.fromHeight(50)),
+
       onPressed: () {
         viewModel.login().then((value) {
           print('value ' + value.toString());
