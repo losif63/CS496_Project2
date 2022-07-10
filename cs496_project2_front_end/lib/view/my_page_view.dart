@@ -1,7 +1,13 @@
+import 'package:cs496_project2_front_end/view/auth_view.dart';
+import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
+import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
+import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPageView extends StatelessWidget {
-  const MyPageView({Key? key}) : super(key: key);
+  MyPageView({Key? key}) : super(key: key);
+  final viewModel = AuthViewModel(KakaoLogin());
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,21 @@ class MyPageView extends StatelessWidget {
                   child: Text('회원 정보 수정', style: TextStyle(fontSize: 16))),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                String uid = prefs.getString('u_id') ?? '0';
+                fetchUserByUid(int.parse(uid)).then((value) {
+                  if (value!.password == 'kakao') {
+                    viewModel.logout();
+                  }
+                });
+                await prefs.clear();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => AuthView()),
+                    (route) => false);
+                //navigation getoffall 하고 authview로
+              },
               child: Container(
                   padding: const EdgeInsets.only(left: 15, right: 15),
                   alignment: Alignment.centerLeft,

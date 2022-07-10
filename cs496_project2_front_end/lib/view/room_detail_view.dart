@@ -1,9 +1,17 @@
+import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class RoomDetailView extends StatelessWidget {
-  const RoomDetailView({Key? key}) : super(key: key);
+class RoomDetailView extends StatefulWidget {
+  RoomModel roomId;
 
+  RoomDetailView(this.roomId, {Key? key}) : super(key: key);
+
+  @override
+  State<RoomDetailView> createState() => _RoomDetailViewState();
+}
+
+class _RoomDetailViewState extends State<RoomDetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +29,6 @@ class RoomDetailView extends StatelessWidget {
             Text('22/07/07 22:24'), //room_opentime
             Text('4/10'), // curparticipants/maxparticipants
             Text('이 방은 서버 때무네 죽을 것 같은 2분반만이 가입할 수 있슴니다.'), //room_description
-            Expanded(child: SizedBox.shrink()),
           ]),
           //ListView.builder(physics: NeverScrollableScrollPhysics(), itemBuilder: (){}, itemCount: 0,) //가입자 리스트뷰
         ]),

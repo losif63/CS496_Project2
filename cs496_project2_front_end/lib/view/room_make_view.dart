@@ -1,12 +1,16 @@
+import 'package:cs496_project2_front_end/model/participate_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/view/control_view.dart';
+import 'package:cs496_project2_front_end/view/room_list_view.dart';
+import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
+import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomMakeView extends StatefulWidget {
-  final int u_id;
-
-  const RoomMakeView(this.u_id, {Key? key}) : super(key: key);
+  const RoomMakeView({Key? key}) : super(key: key);
   @override
   State<RoomMakeView> createState() => _RoomMakeViewState();
 }
@@ -132,16 +136,37 @@ class _RoomMakeViewState extends State<RoomMakeView> {
                                 style: TextStyle(fontSize: 20),
                               ),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
                                 RoomModel newRoom = RoomModel(
                                     r_id: 0,
                                     room_name: roomName,
                                     description: roomDescription,
-                                    opener: widget.u_id,
+                                    opener: int.parse(
+                                        prefs.getString('u_id') ?? '0'),
                                     open_time: DateTime.now().toIso8601String(),
                                     max_participants: maximumParticipants);
+                                addRoom(newRoom).then((value) {
+                                  ParticipateModel newParticipate =
+                                      ParticipateModel(
+                                          p_id: 0,
+                                          user: int.parse(
+                                              prefs.getString('u_id') ?? '0'),
+                                          room: value.r_id,
+                                          join_time:
+                                              DateTime.now().toIso8601String());
+                                  addParticipate(newParticipate);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const ControlView())));
+                                });
                               }
                               //Todo
                             }),
