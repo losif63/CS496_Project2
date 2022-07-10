@@ -41,18 +41,34 @@ Future<ParticipateModel> addParticipate(ParticipateModel participate) async {
   }
 }
 
-List<int> fetchMyParticipates(int uid) {
+Future<List<int>> fetchMyParticipates(int uid) async {
   List<int> myParticipates = [];
 
-  fetchParticipates().then((value) {
+  await fetchParticipates().then((value) {
     for (var participate in value) {
       if (participate.user == uid) {
-        myParticipates.add(participate.p_id);
+        myParticipates.add(participate.room);
       }
     }
   });
 
   return myParticipates;
+}
+
+Future<List<int>> fetchParticipants(int rid) async {
+  List<int> participantsUid = [];
+
+  await fetchParticipates().then((value) {
+    print(value.length);
+    for (var participate in value) {
+      if (participate.room == rid) {
+        participantsUid.add(participate.user);
+        print('add!');
+      }
+    }
+  });
+  print('return!');
+  return participantsUid;
 }
 
 Future<http.Response> deleteParticipate(int pid) async {

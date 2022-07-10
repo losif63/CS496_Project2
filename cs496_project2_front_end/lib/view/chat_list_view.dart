@@ -14,7 +14,7 @@ class _ChatListViewState extends State<ChatListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('방 목록')),
       body: FutureBuilder(
           future: fetchMyRooms(),
           builder: (context, AsyncSnapshot<List<RoomModel>> snapshot) {
@@ -28,11 +28,23 @@ class _ChatListViewState extends State<ChatListView> {
                     color: Colors.black26,
                     thickness: 1.5,
                   ),
-                  itemBuilder: (builder, context) => InkWell(
+                  itemBuilder: (builder, index) => InkWell(
                     onTap: () {},
                     child: Container(
-                      height: 100,
-                    ),
+                        padding: EdgeInsets.all(10),
+                        height: 100,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.data![index].room_name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        )),
                   ),
                   itemCount: snapshot.data!.length,
                 );
