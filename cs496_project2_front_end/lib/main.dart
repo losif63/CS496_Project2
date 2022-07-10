@@ -16,17 +16,12 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
   //print('user' + email.toString());
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'cs496_project2',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-      ),
-      home: email == null ? AuthView() : const ControlView()));
+  runApp(MyApp(email));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String? email;
+  const MyApp(this.email, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const ControlView(),
+      home: email == null ? AuthView() : const ControlView(),
     );
   }
 }

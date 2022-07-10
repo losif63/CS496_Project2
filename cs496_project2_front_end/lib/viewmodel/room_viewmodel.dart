@@ -3,6 +3,7 @@ import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<RoomModel>> fetchRooms() async {
   final response =
@@ -56,8 +57,10 @@ Future<http.Response> deleteRoom(int rid) async {
   }
 }
 
-List<RoomModel> fetchMyRooms(int uid) {
-  List<int> myParticipates = fetchMyParticipates(uid);
+Future<List<RoomModel>> fetchMyRooms() async {
+  final prefs = await SharedPreferences.getInstance();
+  String uid = prefs.getString('u_id') ?? '0';
+  List<int> myParticipates = fetchMyParticipates(int.parse(uid));
   List<RoomModel> myRooms = [];
 
   fetchRooms().then((value) {
