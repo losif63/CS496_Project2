@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../model/user_model.dart';
 import '../viewmodel/user_viewmodel.dart';
-import 'auth_view.dart';
 
 class AuthJoinView extends StatelessWidget {
   AuthJoinView({Key? key}) : super(key: key);

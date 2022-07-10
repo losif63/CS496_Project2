@@ -1,7 +1,6 @@
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatListView extends StatefulWidget {
   const ChatListView({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class _ChatListViewState extends State<ChatListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('방 목록')),
+      appBar: AppBar(title: const Text('방 목록'), elevation: 0.0),
       body: FutureBuilder(
           future: fetchMyRooms(),
           builder: (context, AsyncSnapshot<List<RoomModel>> snapshot) {
@@ -31,7 +30,7 @@ class _ChatListViewState extends State<ChatListView> {
                   itemBuilder: (builder, index) => InkWell(
                     onTap: () {},
                     child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         height: 100,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

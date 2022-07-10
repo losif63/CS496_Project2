@@ -4,6 +4,7 @@ import 'package:cs496_project2_front_end/view/room_make_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class RoomListView extends StatelessWidget {
   const RoomListView({Key? key}) : super(key: key);
@@ -13,17 +14,21 @@ class RoomListView extends StatelessWidget {
     return Builder(builder: ((context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('모임하자'),
+          title: const Text('모임하자'),
           elevation: 0.0,
         ),
         body: ListView(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           children: const [MyRooms(), AllRooms()],
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => RoomMakeView()))),
+          onPressed: () => pushNewScreen(context,
+              screen: const RoomMakeView(), withNavBar: false),
+          // onPressed: () => Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: ((context) => RoomMakeView())),
+          // ),
         ),
       );
     }));
@@ -150,7 +155,7 @@ class _CurParticipantsState extends State<CurParticipants> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('${returnVal}/${widget.maxPar}',
+    return Text('$returnVal/${widget.maxPar}',
         style: const TextStyle(fontSize: 12));
   }
 }

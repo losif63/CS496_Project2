@@ -1,6 +1,8 @@
 import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomDetailView extends StatefulWidget {
   RoomModel roomToShow;
@@ -35,12 +37,50 @@ class _RoomDetailViewState extends State<RoomDetailView> {
           //ListView.builder(physics: NeverScrollableScrollPhysics(), itemBuilder: (){}, itemCount: 0,) //가입자 리스트뷰
         ]),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text('가입하기'),
-        icon: const Icon(MdiIcons.accountMultiplePlus),
-      ),
+      floatingActionButton: CustomActionButton(widget.roomToShow),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class CustomActionButton extends StatefulWidget {
+  RoomModel room;
+  CustomActionButton(this.room, {Key? key}) : super(key: key);
+
+  @override
+  State<CustomActionButton> createState() => _CustomActionButtonState();
+}
+
+class _CustomActionButtonState extends State<CustomActionButton> {
+  String action = '가입하기';
+  Icon actionIcon = const Icon(MdiIcons.accountMultiplePlus);
+
+  checkAction() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uid = prefs.getString('u_id') ?? '0';
+    await fetchParticipants(widget.room.r_id).then((value) {
+      for (var users in value) {
+        if (users.toString() == uid) {
+          action = '채팅 가기';
+          actionIcon = const Icon(MdiIcons.forum);
+          return;
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkAction().then((val) => setState((() {})));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () {},
+      label: Text(action),
+      icon: actionIcon,
     );
   }
 }
