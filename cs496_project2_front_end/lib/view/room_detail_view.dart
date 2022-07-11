@@ -171,7 +171,7 @@ class _CustomActionButtonState extends State<CustomActionButton> {
         if (action == '채팅 가기') {
           print('채팅!');
           pushNewScreen(context,
-              screen: const MessageListView(), withNavBar: false);
+              screen: MessageListView(widget.room), withNavBar: false);
         } else {
           print('가입!');
           print('uid: ' + uid);

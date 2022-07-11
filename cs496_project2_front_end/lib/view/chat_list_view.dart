@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
+
+import 'message_list_view.dart';
 
 class ChatListView extends StatefulWidget {
   const ChatListView({Key? key}) : super(key: key);
@@ -19,7 +23,8 @@ class _ChatListViewState extends State<ChatListView> {
           builder: (context, AsyncSnapshot<List<RoomModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
+                log('No Data Messages');
+                return Text('아직 이 방에는 메세지가 없습니다.');
               } else {
                 return ListView.separated(
                   separatorBuilder: (context, index) => const Divider(
@@ -28,7 +33,13 @@ class _ChatListViewState extends State<ChatListView> {
                     thickness: 1.5,
                   ),
                   itemBuilder: (builder, index) => InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MessageListView(snapshot.data![index])));
+                    },
                     child: Container(
                         padding: const EdgeInsets.all(10),
                         height: 100,
