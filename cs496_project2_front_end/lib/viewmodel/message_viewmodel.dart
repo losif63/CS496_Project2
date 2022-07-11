@@ -41,3 +41,14 @@ Future<MessageModel> addMessage(MessageModel message) async {
     throw Exception('Failed to add room');
   }
 }
+
+Future<List<MessageModel>> fetchMessagesByRid(int rid) async {
+  List<MessageModel> roomMessages = [];
+
+  await fetchMessages().then((result) {
+    for (var msg in result) {
+      if (msg.room == rid) roomMessages.add(msg);
+    }
+  });
+  return roomMessages;
+}

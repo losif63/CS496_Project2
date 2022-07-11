@@ -106,8 +106,10 @@ class _CustomActionButtonState extends State<CustomActionButton> {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: ((context) => MessageListView())));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) => MessageListView(widget.room))));
       },
       label: Text(action),
       icon: actionIcon,
