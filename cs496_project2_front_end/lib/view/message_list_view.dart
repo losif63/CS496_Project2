@@ -88,6 +88,17 @@ class MessageListView extends StatelessWidget {
                         },
                     heroTag: null,
                     child: const Icon(Icons.arrow_downward)),
+                SizedBox(width: 10),
+                FloatingActionButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessageListView(room)));
+                    },
+                    heroTag: null,
+                    child: const Icon(Icons.refresh)),
                 Expanded(child: SizedBox()),
                 FloatingActionButton(
                     onPressed: () => {},
