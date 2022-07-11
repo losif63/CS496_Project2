@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,7 +68,7 @@ Future<UserModel?> fetchUserByUidWithoutGiven() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String uid = prefs.getString('u_id') ?? '0';
   List<UserModel> users = await fetchUsers();
-
+  log('Current user id: ${uid}');
   for (var user in users) {
     if (user.u_id == int.parse(uid)) return user;
   }
