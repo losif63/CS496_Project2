@@ -6,6 +6,7 @@ import 'package:cs496_project2_front_end/view/control_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -135,7 +136,8 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext ctx) => const ControlView()));
+                            builder: (BuildContext ctx) =>
+                                const ControlView()));
                   } else {
                     log('비밀번호가 잘못되었습니다.');
                   }
@@ -198,10 +200,10 @@ class KakaoLoginButton extends StatelessWidget {
       onPressed: () {
         viewModel.login().then((value) {
           if (value == true) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext ctx) => const ControlView()));
+            Navigator.of(context).pushAndRemoveUntil(
+                CupertinoPageRoute(
+                    builder: (BuildContext ctx) => const ControlView()),
+                (_) => false);
           } else {
             print('로그인에 실패했습니다.');
           }

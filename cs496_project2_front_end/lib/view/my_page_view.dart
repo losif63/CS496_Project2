@@ -4,6 +4,7 @@ import 'package:cs496_project2_front_end/view/user_update_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,8 @@ class MyPageView extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           pushNewScreen(context,
-                              screen: UserUpdateView(), withNavBar: false);
+                              screen: UserUpdateView(snapshot.data!),
+                              withNavBar: false);
                         },
                         child: Container(
                             padding: const EdgeInsets.only(left: 15, right: 15),
@@ -52,11 +54,10 @@ class MyPageView extends StatelessWidget {
                             }
                           });
                           await prefs.clear();
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AuthView()),
-                              (route) => false);
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => AuthView()));
+                          ;
                           //navigation getoffall 하고 authview로
                         },
                         child: Container(

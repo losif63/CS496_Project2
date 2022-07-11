@@ -27,9 +27,9 @@ class _RoomDetailViewState extends State<RoomDetailView> {
             Text(widget.roomToShow.room_name,
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold)), //room_name
-            const Text('개발자123'), //room_opener
+            Text(widget.roomToShow.opener.toString()), //room_opener
             Text(widget.roomToShow.open_time), //room_opentime
-            Text('4/${widget.roomToShow.max_participants}'), // curparticipants/maxparticipants
+            Text('4/${widget.roomToShow.max_participants}'),
             Text(widget.roomToShow.description), //room_description
           ]),
           //ListView.builder(physics: NeverScrollableScrollPhysics(), itemBuilder: (){}, itemCount: 0,) //가입자 리스트뷰
