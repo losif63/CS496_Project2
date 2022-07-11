@@ -6,11 +6,18 @@ import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyPageView extends StatelessWidget {
+class MyPageView extends StatefulWidget {
   MyPageView({Key? key}) : super(key: key);
+
+  @override
+  State<MyPageView> createState() => _MyPageViewState();
+}
+
+class _MyPageViewState extends State<MyPageView> {
   final viewModel = AuthViewModel(KakaoLogin());
 
   @override
@@ -33,8 +40,9 @@ class MyPageView extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           pushNewScreen(context,
-                              screen: UserUpdateView(snapshot.data!),
-                              withNavBar: false);
+                                  screen: UserUpdateView(snapshot.data!),
+                                  withNavBar: false)
+                              .then((value) => setState(() {}));
                         },
                         child: Container(
                             padding: const EdgeInsets.only(left: 15, right: 15),
@@ -83,27 +91,44 @@ class MyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.brown.withOpacity(0.3),
-      padding: const EdgeInsets.all(20),
+      color: Colors.amber.withOpacity(0.4),
+      padding: const EdgeInsets.all(15),
       width: MediaQuery.of(context).size.width,
-      height: 150,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Image.asset('assets/images/kakaotalk.png',
-                  scale: 0.1, width: 50, height: 50),
-              const SizedBox(width: 10),
-              Text(user.name,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold))
-            ],
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: (user.profile_pic == '')
+                ? const AssetImage('assets/images/avatar.png')
+                : Image.network(user.profile_pic).image,
           ),
-          const SizedBox(height: 10),
-          Text(
-            user.profile_word,
-          ),
+          const SizedBox(height: 5),
+          Text(user.name,
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Icon(MdiIcons.text, color: Color.fromARGB(255, 71, 71, 71)),
+            const SizedBox(width: 5),
+            Flexible(
+                fit: FlexFit.tight,
+                child: Text(
+                    (user.profile_word == '')
+                        ? '소개글을 등록해주세요.'
+                        : user.profile_word,
+                    maxLines: 4,
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 71, 71, 71))))
+          ]),
+          //const Flexible(fit: FlexFit.tight, child: SizedBox(height: 10)),
+          Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            const Icon(MdiIcons.cake, color: Color.fromARGB(255, 71, 71, 71)),
+            const SizedBox(width: 5),
+            Text((user.birthdate == '') ? '생일 정보를 등록해주세요.' : user.birthdate,
+                style: const TextStyle(color: Color.fromARGB(255, 71, 71, 71)))
+          ])
         ],
       ),
     );

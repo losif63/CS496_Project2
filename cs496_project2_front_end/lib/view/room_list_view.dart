@@ -6,8 +6,15 @@ import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-class RoomListView extends StatelessWidget {
+class RoomListView extends StatefulWidget {
   const RoomListView({Key? key}) : super(key: key);
+
+  @override
+  State<RoomListView> createState() => _RoomListViewState();
+}
+
+class _RoomListViewState extends State<RoomListView> {
+  ValueNotifier<bool> _notifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +24,29 @@ class RoomListView extends StatelessWidget {
           title: const Text('모임하자'),
           elevation: 0.0,
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(10),
-          children: const [MyRooms(), AllRooms()],
-        ),
+        body: RefreshIndicator(
+            child: ListView(
+              padding: const EdgeInsets.all(10),
+              children: [
+                ValueListenableBuilder(
+                    valueListenable: _notifier,
+                    builder: (BuildContext bcx, bool val, Widget? child) {
+                      return MyRooms(val);
+                    }),
+                ValueListenableBuilder(
+                    valueListenable: _notifier,
+                    builder: (BuildContext bcx, bool val, Widget? child) {
+                      return AllRooms(val);
+                    }),
+              ],
+            ),
+            onRefresh: () {
+              return Future.delayed(const Duration(seconds: 1), () {
+                _notifier.value = !_notifier.value;
+                print('refresh!');
+                print(_notifier.toString());
+              });
+            }),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () => pushNewScreen(context,
@@ -36,7 +62,8 @@ class RoomListView extends StatelessWidget {
 }
 
 class MyRooms extends StatelessWidget {
-  const MyRooms({Key? key}) : super(key: key);
+  bool listener;
+  MyRooms(this.listener, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +188,8 @@ class _CurParticipantsState extends State<CurParticipants> {
 }
 
 class AllRooms extends StatefulWidget {
-  const AllRooms({Key? key}) : super(key: key);
+  bool listener;
+  AllRooms(this.listener, {Key? key}) : super(key: key);
 
   @override
   State<AllRooms> createState() => _AllRoomsState();

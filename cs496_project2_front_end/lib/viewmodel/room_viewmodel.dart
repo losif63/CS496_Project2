@@ -52,7 +52,7 @@ Future<http.Response> deleteRoom(int rid) async {
   if (response.statusCode == 203) {
     return response;
   } else {
-    throw Exception('Failed to delete user');
+    throw Exception('Failed to delete room');
   }
 }
 

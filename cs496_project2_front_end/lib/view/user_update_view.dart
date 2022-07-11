@@ -17,12 +17,15 @@ class UserUpdateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 45, right: 45),
-          child: CustomUpdateForm(formKey: _formKey, user),
+      body: SingleChildScrollView(
+        child: Container(
+          //padding: MediaQuery.of(context).viewInsets,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 45, right: 45),
+            child: CustomUpdateForm(formKey: _formKey, user),
+          ),
         ),
       ),
     );
@@ -208,7 +211,12 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
               autocorrect: false,
               initialValue: profileMessage,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: null,
+              validator: (val) {
+                if (val!.length < 101) {
+                  return null;
+                }
+                return '상태 메세지는 100글자 이하로 적어주세요.';
+              },
               onSaved: (val) {
                 setState(() => profileMessage = val!.trim());
               },
@@ -225,7 +233,15 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
                 FocusScope.of(context).requestFocus(FocusNode());
                 date = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: (birthday == '')
+                        ? DateTime.now()
+                        : DateTime(
+                            int.parse(birthday[0] +
+                                birthday[1] +
+                                birthday[2] +
+                                birthday[3]),
+                            int.parse(birthday[5] + birthday[6]),
+                            int.parse(birthday[8] + birthday[9])),
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2100));
                 if (date != null) {
@@ -241,7 +257,7 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
                       .replaceAll('-', '/');
                 }
               },
-              decoration: const InputDecoration(labelText: '생년월일')),
+              decoration: InputDecoration(labelText: birthday)),
           const SizedBox(height: 20),
           ElevatedButton(
             child: Row(
