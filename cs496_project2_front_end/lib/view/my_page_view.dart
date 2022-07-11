@@ -46,11 +46,9 @@ class MyPageView extends StatelessWidget {
                         onTap: () async {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          fetchUserByUidWithoutGiven().then((value) {
-                            if (value!.password == 'kakao') {
-                              viewModel.logout();
-                            }
-                          });
+                          if (snapshot.data!.password == 'kakao') {
+                            viewModel.logout();
+                          }
                           await prefs.clear();
                           Navigator.pushAndRemoveUntil(
                               context,
