@@ -254,12 +254,6 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
             onPressed: () {
               if (widget._formKey.currentState!.validate()) {
                 widget._formKey.currentState!.save();
-                log('ProfileUri: $profileUri');
-                log('Name: $name');
-                log('Email: $email');
-                log('Password: $password');
-                log('ProfileMessage: $profileMessage');
-                log('Birthday: $birthday');
                 updateUser(UserModel(
                     u_id: widget.user.u_id,
                     name: name,
