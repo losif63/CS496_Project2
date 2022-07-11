@@ -51,23 +51,16 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
   TextEditingController ctrlr = TextEditingController();
   late XFile _imageFile;
   final ImagePicker _picker = ImagePicker();
+  late Future<UserModel?> currentUser = getCurrentUser();
 
   @override
   Widget build(BuildContext context) {
-    Future<UserModel?> currentUser = getCurrentUser();
     return Form(
         key: widget._formKey,
         child: FutureBuilder<UserModel?>(
             future: currentUser,
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
-                profileUri = snapshot.data!.profile_pic;
-                name = snapshot.data!.name;
-                email = snapshot.data!.email;
-                password = snapshot.data!.password;
-                profileMessage = snapshot.data!.profile_word;
-                birthday = snapshot.data!.birthdate;
-
                 return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -336,6 +329,7 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
         }
 
         foo();
+        Navigator.pop(context);
       }
     });
   }

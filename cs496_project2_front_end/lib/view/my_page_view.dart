@@ -1,5 +1,6 @@
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/view/auth_view.dart';
+import 'package:cs496_project2_front_end/view/user_update_view.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/auth_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/auth/kakao_login.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
