@@ -25,15 +25,14 @@ class _RoomDetailViewState extends State<RoomDetailView> {
     // TODO: implement initState
     super.initState();
 
-    foo() async {
-      var currentUser = await fetchUserByUid(widget.roomToShow.opener);
-      if (currentUser != null) {
-        openerName = currentUser.name;
-        log(openerName);
-      }
-    }
-
-    foo();
+    fetchUserByUid(widget.roomToShow.opener).then((result) {
+      setState(() {
+        if (result != null) {
+          openerName = result.name;
+          log(openerName);
+        }
+      });
+    });
   }
 
   @override
@@ -48,12 +47,19 @@ class _RoomDetailViewState extends State<RoomDetailView> {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(widget.roomToShow.room_name,
                 style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold)), //room_name
+                    fontSize: 28, fontWeight: FontWeight.bold)), //room_name
+            const SizedBox(height: 5),
+            Text(
+              widget.roomToShow.description,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+            ), //room_description
+            const SizedBox(height: 5),
             Text('방 개설자: $openerName'), //room_opener
+            const SizedBox(height: 5),
             Text('개설 날짜: ${widget.roomToShow.open_time}'), //room_opentime
+            const SizedBox(height: 5),
             Text(
                 '인원 수: 4/${widget.roomToShow.max_participants}'), // curparticipants/maxparticipants
-            Text(widget.roomToShow.description), //room_description
           ]),
           //ListView.builder(physics: NeverScrollableScrollPhysics(), itemBuilder: (){}, itemCount: 0,) //가입자 리스트뷰
         ]),
