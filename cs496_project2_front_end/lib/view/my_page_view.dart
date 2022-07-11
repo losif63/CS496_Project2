@@ -91,10 +91,9 @@ class MyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.brown.withOpacity(0.3),
+      color: Colors.amber.withOpacity(0.4),
       padding: const EdgeInsets.all(15),
       width: MediaQuery.of(context).size.width,
-      height: 275,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -123,7 +122,7 @@ class MyInfo extends StatelessWidget {
                     style: const TextStyle(
                         color: Color.fromARGB(255, 71, 71, 71))))
           ]),
-          const Flexible(fit: FlexFit.tight, child: SizedBox(height: 10)),
+          //const Flexible(fit: FlexFit.tight, child: SizedBox(height: 10)),
           Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
             const Icon(MdiIcons.cake, color: Color.fromARGB(255, 71, 71, 71)),
             const SizedBox(width: 5),

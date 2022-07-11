@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:cs496_project2_front_end/model/participate_model.dart';
+import 'package:cs496_project2_front_end/model/room_model.dart';
+import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<ParticipateModel>> fetchParticipates() async {
@@ -77,4 +79,15 @@ Future<http.Response> deleteParticipate(int pid) async {
   } else {
     throw Exception('Failed to delete user');
   }
+}
+
+exitRoom(ParticipateModel participate) async {
+  await fetchParticipants(participate.room).then((value) {
+    if (value.length == 1) {
+      //참여자==나 하나 -> 방 삭제
+      deleteRoom(participate.room);
+    }
+  });
+  await deleteParticipate(participate.p_id);
+  return;
 }
