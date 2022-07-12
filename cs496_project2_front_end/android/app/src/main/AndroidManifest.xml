@@ -2,7 +2,7 @@
     package="com.example.cs496_project2_front_end">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="cs496_project2_front_end"
+        android:label="모여라"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

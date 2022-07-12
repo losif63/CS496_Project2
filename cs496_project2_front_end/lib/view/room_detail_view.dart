@@ -69,7 +69,8 @@ class _RoomDetailViewState extends State<RoomDetailView> {
               const SizedBox(height: 5),
               Text('방 개설자: $openerName'), //room_opener
               const SizedBox(height: 5),
-              Text('개설 날짜: ${widget.roomToShow.open_time}'), //room_opentime
+              Text(
+                  '개설 날짜: ${widget.roomToShow.open_time.substring(0, 10).replaceAll('-', '/')}'), //room_opentime
               const SizedBox(height: 5),
               Text(
                   '인원 수: ${participantsUid.length}/${widget.roomToShow.max_participants}'), // curparticipants/maxparticipants
