@@ -63,14 +63,16 @@ Future<List<RoomModel>> fetchMyRooms() async {
   List<RoomModel> myRooms = [];
 
   await fetchRooms().then((value) {
-    for (var room in value) {
-      for (var rid in myParticipates) {
+    for (var rid in myParticipates) {
+      for (var room in value) {
         if (room.r_id == rid) {
           myRooms.add(room);
         }
       }
     }
   });
+
+  myRooms = List.from(myRooms.reversed);
 
   return myRooms;
 }

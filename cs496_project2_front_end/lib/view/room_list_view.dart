@@ -181,6 +181,15 @@ class _CurParticipantsState extends State<CurParticipants> {
   }
 
   @override
+  void didUpdateWidget(covariant CurParticipants oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    fetchParticipants(widget.roomId).then((value) {
+      returnVal = value.length.toString();
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text('$returnVal/${widget.maxPar}',
         style: const TextStyle(fontSize: 12));

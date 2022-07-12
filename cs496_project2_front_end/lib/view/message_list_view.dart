@@ -4,6 +4,7 @@ import 'package:cs496_project2_front_end/model/message_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/model/user_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/message_viewmodel.dart';
+import 'package:cs496_project2_front_end/viewmodel/participate_viewmodel.dart';
 import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,26 @@ class MessageListView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('메세지 목록'),
               elevation: 0.0,
+              actions: <Widget>[
+                PopupMenuButton<String>(
+                  onSelected: (value) async {
+                    switch (value) {
+                      case '탈퇴하기':
+                        await exitRoom(room.r_id);
+                        Navigator.pop(context);
+                        break;
+                    }
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return {'탈퇴하기'}.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  },
+                ),
+              ],
             ),
             body: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
