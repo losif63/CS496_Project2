@@ -8,6 +8,8 @@ import 'package:cs496_project2_front_end/viewmodel/user_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'message_make_view.dart';
+
 class MessageListView extends StatelessWidget {
   MessageListView(this.room, {Key? key}) : super(key: key);
   RoomModel room;
@@ -101,7 +103,12 @@ class MessageListView extends StatelessWidget {
                     child: const Icon(Icons.refresh)),
                 Expanded(child: SizedBox()),
                 FloatingActionButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MessageMakeView(room)))
+                        },
                     heroTag: null,
                     child: const Icon(Icons.add))
               ],
