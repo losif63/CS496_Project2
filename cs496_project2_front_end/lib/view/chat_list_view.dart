@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'message_list_view.dart';
 
@@ -34,11 +35,9 @@ class _ChatListViewState extends State<ChatListView> {
                   ),
                   itemBuilder: (builder, index) => InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  MessageListView(snapshot.data![index])));
+                      pushNewScreen(context,
+                          screen: MessageListView(snapshot.data![index]),
+                          withNavBar: false);
                     },
                     child: Container(
                         padding: const EdgeInsets.all(10),

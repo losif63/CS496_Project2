@@ -3,6 +3,7 @@ import 'package:cs496_project2_front_end/model/participate_model.dart';
 import 'package:cs496_project2_front_end/model/room_model.dart';
 import 'package:cs496_project2_front_end/viewmodel/room_viewmodel.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<ParticipateModel>> fetchParticipates() async {
   final response =
@@ -71,23 +72,36 @@ Future<List<int>> fetchParticipants(int rid) async {
 }
 
 Future<http.Response> deleteParticipate(int pid) async {
+  print('pid: ' + pid.toString());
   final response = await http.delete(
       Uri.parse('http://192.249.18.152/participate/deleteparticipate/$pid'),
       headers: <String, String>{'Content-Type': 'text/plain'});
   if (response.statusCode == 203) {
     return response;
   } else {
-    throw Exception('Failed to delete user');
+    throw Exception('Failed to delete participate');
   }
 }
 
-exitRoom(ParticipateModel participate) async {
-  await fetchParticipants(participate.room).then((value) {
-    if (value.length == 1) {
-      //참여자==나 하나 -> 방 삭제
-      deleteRoom(participate.room);
+exitRoom(int rid) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String uid = prefs.getString('u_id') ?? '0';
+  ParticipateModel participateToDelete =
+      ParticipateModel(p_id: 0, user: 0, room: 0, join_time: '');
+  await fetchParticipates().then((value) {
+    for (var par in value) {
+      if (par.room == rid && par.user == int.parse(uid)) {
+        participateToDelete = par;
+        break;
+      }
     }
   });
-  await deleteParticipate(participate.p_id);
+  await fetchParticipants(participateToDelete.room).then((value) {
+    if (value.length == 1) {
+      //참여자==나 하나 -> 방 삭제
+      deleteRoom(participateToDelete.room);
+    }
+  });
+  await deleteParticipate(participateToDelete.p_id);
   return;
 }

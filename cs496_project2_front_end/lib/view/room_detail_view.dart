@@ -133,6 +133,7 @@ class _RoomDetailViewState extends State<RoomDetailView> {
 
 class CustomActionButton extends StatefulWidget {
   RoomModel room;
+
   CustomActionButton(this.room, {Key? key}) : super(key: key);
 
   @override
@@ -170,6 +171,7 @@ class _CustomActionButtonState extends State<CustomActionButton> {
       onPressed: () async {
         if (action == '채팅 가기') {
           print('채팅!');
+          Navigator.pop(context);
           pushNewScreen(context,
               screen: MessageListView(widget.room), withNavBar: false);
         } else {
@@ -181,7 +183,11 @@ class _CustomActionButtonState extends State<CustomActionButton> {
               room: widget.room.r_id,
               join_time: DateTime.now().toIso8601String());
           await addParticipate(newPar);
-          checkAction().then((val) => setState(() {}));
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => RoomDetailView(widget.room))));
         }
       },
       label: Text(action),
