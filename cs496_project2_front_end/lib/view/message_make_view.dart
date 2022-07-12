@@ -37,17 +37,17 @@ class _MessageMakeViewState extends State<MessageMakeView> {
                   child: ListTile(
                     title: const Text("보낼 메세지"),
                     subtitle: TextFormField(
-                      maxLines: 10,
+                      maxLines: 8,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8))),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        contentPadding: EdgeInsets.all(10),
                         hintText: '메세지 내용',
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (val) {
                         if (val != null) {
-                          if (val.length > 0) {
+                          if (val.isNotEmpty) {
                             if (val.length < 201) {
                               return null;
                             }

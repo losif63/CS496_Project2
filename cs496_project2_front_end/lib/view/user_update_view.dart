@@ -225,7 +225,9 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
           const SizedBox(height: 5),
           TextFormField(
               controller: ctrlr,
-              onSaved: null,
+              onSaved: (val) {
+                setState(() => birthday = val!.trim());
+              },
               readOnly: true,
               validator: null,
               onTap: () async {
