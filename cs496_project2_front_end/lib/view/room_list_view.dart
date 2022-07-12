@@ -214,6 +214,12 @@ class _AllRoomsState extends State<AllRooms> {
   }
 
   @override
+  void didUpdateWidget(covariant AllRooms oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _allrooms = fetchRooms();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
