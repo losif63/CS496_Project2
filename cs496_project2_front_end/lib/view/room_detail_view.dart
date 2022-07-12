@@ -176,19 +176,28 @@ class _CustomActionButtonState extends State<CustomActionButton> {
           pushNewScreen(context,
               screen: MessageListView(widget.room), withNavBar: false);
         } else {
-          print('가입!');
-          print('uid: ' + uid);
-          ParticipateModel newPar = ParticipateModel(
-              p_id: 0,
-              user: int.parse(uid),
-              room: widget.room.r_id,
-              join_time: DateTime.now().toIso8601String());
-          await addParticipate(newPar);
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: ((context) => RoomDetailView(widget.room))));
+          List<int> pars = await fetchParticipants(widget.room.r_id);
+          if (pars.length == widget.room.max_participants) {
+            print('가입 불가!');
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('최대 인원 수가 차 가입할 수 없습니다.'),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(milliseconds: 1000),
+            ));
+          } else {
+            print('가입!');
+            ParticipateModel newPar = ParticipateModel(
+                p_id: 0,
+                user: int.parse(uid),
+                room: widget.room.r_id,
+                join_time: DateTime.now().toIso8601String());
+            await addParticipate(newPar);
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => RoomDetailView(widget.room))));
+          }
         }
       },
       label: Text(action),
