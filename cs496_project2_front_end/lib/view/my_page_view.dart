@@ -107,7 +107,7 @@ class MyInfo extends StatelessWidget {
           Text(user.name,
               style:
                   const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Icon(MdiIcons.text, color: Color.fromARGB(255, 71, 71, 71)),
             const SizedBox(width: 5),

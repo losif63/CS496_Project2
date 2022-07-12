@@ -48,7 +48,9 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
         key: widget._formKey,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           TextFormField(
-            onSaved: null,
+            onSaved: (val) {
+              setState(() => name = val!.trim());
+            },
             autocorrect: false,
             keyboardType: TextInputType.name,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -68,7 +70,9 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
           ),
           const SizedBox(height: 5),
           TextFormField(
-            onSaved: null,
+            onSaved: (val) {
+              setState(() => email = val!.trim());
+            },
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -90,7 +94,9 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
           const SizedBox(height: 5),
           TextFormField(
               obscureText: true,
-              onSaved: null,
+              onSaved: (val) {
+                setState(() => password = val!.trim());
+              },
               autocorrect: false,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (val) {
@@ -119,12 +125,12 @@ class _CustomJoinFormState extends State<CustomJoinForm> {
             ),
             onPressed: () {
               if (widget._formKey.currentState!.validate()) {
+                widget._formKey.currentState!.save();
                 //server의 유저정보와 같은 것이 있는지 체크
                 Future<UserModel?> currentUser = fetchUserByEmail(email);
                 currentUser.then((value) async {
                   if (value == null) {
                     log('해당 이메일은 등록되지 않은 새 이메일입니다!!');
-                    widget._formKey.currentState!.save();
                     Future<UserModel> futureNewUser = addUser(UserModel(
                         u_id: -1,
                         name: name,

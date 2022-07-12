@@ -122,13 +122,14 @@ class _CustomLoginFormState extends State<CustomLoginForm> {
             ),
             onPressed: () async {
               if (widget._formKey.currentState!.validate()) {
+                widget._formKey.currentState!.save();
+                log(email);
                 Future<UserModel?> currentUser = fetchUserByEmail(email);
                 currentUser.then((value) async {
                   if (value == null) {
                     log('저장된 유저 정보가 없습니다.');
                     return const SnackBar(content: Text('저장된 유저 정보가 없습니다.'));
                   } else if (value.password == password) {
-                    widget._formKey.currentState!.save();
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     prefs.setString('email', email);

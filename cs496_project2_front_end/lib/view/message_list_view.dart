@@ -50,52 +50,64 @@ class MessageListView extends StatelessWidget {
                 child: FutureBuilder<List<MessageModel>>(
                   future: fetchMessagesByRid(room.r_id),
                   builder: ((context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData &&
-                        snapshot.data!.isNotEmpty) {
-                      return Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.separated(
-                              controller: _controller,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: ((context, index) {
-                                return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(3.0)),
-                                    child: Row(
-                                      children: [
-                                        Profile(snapshot.data![index].user),
-                                        const SizedBox(width: 15),
-                                        Text(snapshot.data![index].content,
-                                            style:
-                                                const TextStyle(fontSize: 16)),
-                                        const Expanded(child: SizedBox()),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              snapshot.data![index].send_time
-                                                  .substring(0, 10),
-                                              style: TextStyle(fontSize: 11.5),
-                                            ),
-                                            const SizedBox(height: 3),
-                                            Text(
-                                              snapshot.data![index].send_time
-                                                  .substring(10),
-                                              style: TextStyle(fontSize: 11.5),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ));
-                              }),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 10),
-                              itemCount: snapshot.data!.length));
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        return Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.separated(
+                                controller: _controller,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: ((context, index) {
+                                  return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(3.0)),
+                                      child: Row(
+                                        children: [
+                                          Profile(snapshot.data![index].user),
+                                          const SizedBox(width: 15),
+                                          Text(snapshot.data![index].content,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                          const Expanded(child: SizedBox()),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                snapshot.data![index].send_time
+                                                    .substring(0, 10),
+                                                style:
+                                                    TextStyle(fontSize: 11.5),
+                                              ),
+                                              const SizedBox(height: 3),
+                                              Text(
+                                                snapshot.data![index].send_time
+                                                    .substring(10),
+                                                style:
+                                                    TextStyle(fontSize: 11.5),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ));
+                                }),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 10),
+                                itemCount: snapshot.data!.length));
+                      } else {
+                        print('no messages');
+                        return Container(
+                            height: 50,
+                            child: Center(
+                                child: Text(
+                              '아직 오고 간 메시지가 없습니다. 첫 메시지를 보내보세요!',
+                              style: TextStyle(fontSize: 16),
+                            )));
+                      }
                     } else {
                       return const CircularProgressIndicator();
                     }
