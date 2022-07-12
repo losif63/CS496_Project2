@@ -30,7 +30,8 @@ class AuthView extends StatelessWidget {
                   Container(
                       height: 50,
                       width: 50,
-                      color: Colors.amber), //TODO: 앱 로고 박기
+                      child: Image.asset(
+                          'assets/images/gathering.png')), //TODO: 앱 로고 박기
                   const SizedBox(height: 15),
                   const Text('사람들과 간편하게 모임을 만들자, 모여라',
                       style: TextStyle(fontSize: 16, color: Colors.black87)),

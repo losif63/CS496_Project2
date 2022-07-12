@@ -117,7 +117,7 @@ class _CustomUpdateFormState extends State<CustomUpdateForm> {
                       showModalBottomSheet(
                           context: context,
                           builder: ((builder) => Container(
-                              height: 100,
+                              height: 120,
                               width: MediaQuery.of(context).size.width,
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 20),
